@@ -1,0 +1,105 @@
+baseURL = 'https://elviie.com/'
+languageCode = 'en-us'
+title = 'My Elviie Hugo Site'
+theme = "hugo-theme-stack"
+
+[menu]
+	[[menu.main]]
+		name = 'Posts'
+		pageRef = '/posts/'
+		weight = 10
+
+	[[menu.main]]
+		name = "Home"
+		pageRef = "/"
+		weight = 10
+		identifier = "home"
+		#[menu.main.params]
+		#	icon = "home"
+		#	newTab = true
+
+	[[menu.main]]
+		name = 'About'
+		pageRef = '/about/'
+		weight = 20
+
+	[[menu.main]]
+		name = 'Contact'
+		pageRef = '/contact/'
+		weight = 20
+
+	#[[menu.main]]
+	#	name = 'Projects'
+	#	pageRef = '/projects/'
+	#	weight = 20
+
+	[[menu.social]]
+		identifier = "github"
+		name = "GitHub"
+		url = "https://github.com/massinja/"
+		weight = 1
+			[menu.social.params]
+				icon = "square-github"
+
+	[[menu.social]]
+		identifier = "linkedin"
+		name = "Linkedin"
+		url = "https://linkedin.com/in/elviie/"
+		weight = 2
+		[menu.social.params]
+			icon = "linkedin"
+
+	[[menu.social]]
+		identifier = "email"
+		name = "Email"
+		pageRef = '/contact/'
+		weight = 3
+		[menu.social.params]
+			icon = "envelope"
+
+[params]
+	featuredImageField = "image"
+	rssFullContent = true
+	mainSections = ["Posts", "posts"]
+
+	[params.meta]
+		favicon = true
+
+	[params.widgets]
+		homepage = [
+			#{ type = "categories", params = {"limit" = 10 } },
+			{ type = "tag-cloud", params = { "limit" = 30  } }
+		]
+
+		page = [
+			#{ type = "categories", params = { "limit" = 10 } },
+			{ type = "tag-cloud", params = { "limit" = 30 } },
+			{ type = "toc"}
+		]
+
+	[params.sidebar]
+		subtitle = "Why does Elviie have two 'i's? Because she is not a cyclop!"
+
+	[params.article]
+		headingAnchor = true
+		math = false
+		toc = true
+		readingTime = true
+
+	[params.imageProcessing]
+		[params.imageProcessing.cover]
+			enabled = true
+		[params.imageProcessing.content]
+			enabled = true
+
+[markup]
+	[markup.tableOfContents]
+		endLevel = 6
+		startLevel = 1
+
+[services]
+	[services.disqus]
+		shortname = "elviie"
+
+[taxonomies]
+	tags = "tags"

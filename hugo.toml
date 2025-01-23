@@ -77,9 +77,6 @@ theme = "hugo-theme-stack"
 			{ type = "toc"}
 		]
 
-	[params.sidebar]
-		subtitle = "Why does Elviie have two 'i's? Because she is not a cyclop!"
-
 	[params.article]
 		headingAnchor = true
 		math = false

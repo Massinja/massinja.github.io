@@ -61,6 +61,7 @@ theme = "hugo-theme-stack"
 	featuredImageField = "image"
 	rssFullContent = true
 	mainSections = ["Posts", "posts"]
+	mastodon = "https://mastodon.social/@elviie"
 
 	[params.meta]
 		favicon = true
@@ -93,10 +94,6 @@ theme = "hugo-theme-stack"
 	[markup.tableOfContents]
 		endLevel = 6
 		startLevel = 1
-
-[services]
-	[services.disqus]
-		shortname = "elviie"
 
 [taxonomies]
 	tags = "tags"

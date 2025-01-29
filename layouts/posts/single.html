@@ -31,12 +31,12 @@
     {{ end }}
 
     {{ partial "article/components/related-content" . }}
-     
-    {{ if not (eq .Params.comments false) }}
-        {{ template "_internal/disqus.html" . }}
-    {{ end }}
 
-    {{ partialCached "footer/footer" . }}
+	{{ if .Params.mastodon_id }}
+		{{ partial "comments-mastodon" . }}
+	{{ end }}
+
+	{{ partialCached "footer/footer" . }}
 
     {{ partialCached "article/components/photoswipe" . }}
 {{ end }}

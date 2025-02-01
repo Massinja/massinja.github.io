@@ -1,46 +1,117 @@
 {{ define "main" }}
-    <header>
-          <div class="section-card">
-            <div class="section-details">
-                <h1 class="section-term">{{ .Title }}</h1>
-                {{ .Content }}
-                {{ with .Params.description }}
-                    <h2 class="section-description">{{ . }}</h2>
-                {{ end }}
-            </div>
+	<header>
+		<h1 class="section-term">{{ .Title }}</h1>
+			{{- $image := partialCached "helper/image" (dict "Context" . "Type" "section") .RelPermalink "section" -}}
+			{{ if $image.exists }}
+				<div class="section-image">
+					{{ if $image.resource }}
+						{{- $Permalink := $image.resource.RelPermalink -}}
+						{{- $Width := $image.resource.Width -}}
+						{{- $Height := $image.resource.Height -}}
 
-            {{- $image := partialCached "helper/image" (dict "Context" . "Type" "section") .RelPermalink "section" -}}
-            {{ if $image.exists }}
-                <div class="section-image">
-                    {{ if $image.resource }}
-                        {{- $Permalink := $image.resource.RelPermalink -}}
-                        {{- $Width := $image.resource.Width -}}
-                        {{- $Height := $image.resource.Height -}}
-    
-                        {{- if (default true .Page.Site.Params.imageProcessing.cover.enabled) -}}
-                            {{- $thumbnail := $image.resource.Fill "120x120" -}}
-                            {{- $Permalink = $thumbnail.RelPermalink -}}
-                            {{- $Width = $thumbnail.Width -}}
-                            {{- $Height = $thumbnail.Height -}}
-                        {{- end -}}
-                        
-                        <img src="{{ $Permalink }}" 
-                            width="{{ $Width }}"
-                            height="{{ $Height }}" 
-                            loading="lazy">
-                    {{ else }}
-                        <img src="{{ $image.permalink }}" loading="lazy" />
-                    {{ end }}
-                </div>
-            {{ end }}
-        </div>
-    </header>
+						{{- if (default true .Page.Site.Params.imageProcessing.cover.enabled) -}}
+							{{- $thumbnail := $image.resource.Fill "120x120" -}}
+							{{- $Permalink = $thumbnail.RelPermalink -}}
+							{{- $Width = $thumbnail.Width -}}
+							{{- $Height = $thumbnail.Height -}}
+						{{- end -}}
 
+						<img src="{{ $Permalink }}"
+							width="{{ $Width }}"
+							height="{{ $Height }}"
+							loading="lazy">
+					{{ else }}
+						<img src="{{ $image.permalink }}" loading="lazy" />
+					{{ end }}
+				</div>
+			{{ end }}
 
+	</header>
+	<form name="{{ .Title | lower }}-submission"{{ if .Params.formspree_form_id }} action="{{ .Params.formspree_form_id }}"{{ end }} method="POST" accept-charset="utf-8">
+		<fieldset id="{{ .Title | lower }}-inputs">
+			<legend>{{ .Params.Name }}</legend>
+			<label for="full-name">Full Name</label><br>
+			<input type="text" name="name" id="full-name" placeholder="John Doe" required><br>
+			<label for="email-address">Email address</label><br>
+			<input type="email" name="_replyto" id="email-address" placeholder="your@email.here" required><br>
+			<label for="message">Message</label><br>
+			<textarea rows="6" name="message" id="message" placeholder="Elviie, update this site already!" required></textarea><br>
+			<input type="hidden" name="_subject" id="email-subject" value="{{ .Params.Name | title }} Submission" />
+		</fieldset>
+		<input type="submit" class="submit-button" value="{{ if .Params.submit_button_label }}{{ .Params.submit_button_label }}{{ end }}">
+	</form>
 
-    {{ partialCached "footer/footer" . }}
+	<style>
+		fieldset {
+			border: none;
+			margin: 0;
+			padding: 0;
+		}
+
+		legend {
+			font-size: 1.5em;
+			font-weight: bold;
+			color: #333;
+			margin-bottom: 5px;
+		}
+
+		label {
+			display: block;
+			margin-bottom: 1px;
+			font-weight: 600;
+			padding-left: 10px;
+		}
+
+		input[type="text"], input[type="email"], textarea {
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 15px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			box-sizing: border-box;
+			font-size: 1em;
+		}
+
+		input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
+			outline: none;
+		}
+
+		textarea {
+			resize: vertical;
+		}
+
+		.submit-button {
+			background-color: #51befd;
+			color: white;
+			border: none;
+			padding: 12px 20px;
+			font-size: 1em;
+			cursor: pointer;
+			border-radius: 4px;
+			width: 25%;
+			margin: 0 auto;
+			display: block;
+		}
+
+		.submit-button:hover {
+			background-color: #2c1195;
+		}
+
+		/* Mobile responsiveness */
+		@media (max-width: 768px) {
+
+			.submit-button {
+				width: auto;
+				margin: 0 auto;
+				display: block;
+			}
+		}
+	</style>
+
+	{{ partialCached "footer/footer" . }}
 {{ end }}
 
 {{ define "right-sidebar" }}
-    {{ partial "sidebar/right.html" (dict "Context" . "Scope" "homepage") }}
+	{{ partial "sidebar/right.html" (dict "Context" . "Scope" "homepage") }}
+
 {{ end }}

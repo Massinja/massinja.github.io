@@ -89,6 +89,11 @@ theme = "hugo-theme-stack"
 			enabled = true
 		[params.imageProcessing.content]
 			enabled = true
+	[params.colorScheme]
+	# Hide the light/dark mode switch toggle
+		toggle = false
+	# Force the theme to remain in light mode permanently
+		default = "light"
 
 [markup]
 	[markup.tableOfContents]
